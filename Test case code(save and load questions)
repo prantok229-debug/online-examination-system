@@ -1,0 +1,31 @@
+#include <stdio.h>
+#include <string.h>
+
+#define TEST_MODE
+#include "online_exam_final_persistent_fixed.c"
+
+int main() {
+    Question q;
+    q.qid = 55;
+    strcpy(q.text, "Is C a programming language?");
+    strcpy(q.opt[0], "Yes");
+    strcpy(q.opt[1], "No");
+    strcpy(q.opt[2], "Maybe");
+    strcpy(q.opt[3], "None");
+    q.correct = 1;
+
+    save_question_to_file(&q);
+    load_questions_from_file();
+
+    int found = 0;
+    for (int i = 0; i < qcount; i++)
+        if (qbank[i].qid == 55)
+            found = 1;
+
+    if (found)
+        printf("TEST CASE 3 PASSED\n");
+    else
+        printf("TEST CASE 3 FAILED\n");
+
+    return 0;
+}
